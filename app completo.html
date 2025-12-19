@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProFit - Seu App de Treino</title>
+    <style>
+        :root {
+            --primary: #00ff88;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 80px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .category-menu {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 10px;
+            scrollbar-width: none;
+        }
+
+        .category-btn {
+            background: var(--card);
+            color: white;
+            border: 1px solid #334155;
+            padding: 10px 20px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .container { padding: 20px; }
+
+        .workout-section { display: none; }
+        .workout-section.active { display: block; animation: fadeIn 0.5s; }
+
+        .exercise-card {
+            background: var(--card);
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        .ex-info h3 { margin: 0; font-size: 1.1rem; color: var(--primary); }
+        .ex-info p { margin: 5px 0 0; color: #94a3b8; font-size: 0.9rem; }
+
+        .check-circle {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .check-circle.done { background: var(--primary); color: #000; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #1e293b;
+            padding: 15px 0;
+            text-align: center;
+            border-top: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>FITNESS<span style="color:var(--primary)">PRO</span></h1>
+    <p>Onde o suor vira resultado</p>
+</header>
+
+<div class="category-menu">
+    <button class="category-btn active" onclick="showWorkout('peito', this)">Peito</button>
+    <button class="category-btn" onclick="showWorkout('costas', this)">Costas</button>
+    <button class="category-btn" onclick="showWorkout('pernas', this)">Pernas</button>
+    <button class="category-btn" onclick="showWorkout('ombros', this)">Ombros</button>
+    <button class="category-btn" onclick="showWorkout('bracos', this)">Braços</button>
+</div>
+
+<div class="container" id="workout-container">
+    
+    <div id="peito" class="workout-section active">
+        <h2>Treino A: Peitoral</h2>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Supino Reto</h3><p>4 séries x 10 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Supino Inclinado (Halter)</h3><p>3 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Crossover</h3><p>3 séries x 15 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+    </div>
+
+    <div id="costas" class="workout-section">
+        <h2>Treino B: Costas</h2>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Puxada Alta</h3><p>4 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Remada Curvada</h3><p>3 séries x 10 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Puxada Baixa</h3><p>3 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+    </div>
+
+    <div id="pernas" class="workout-section">
+        <h2>Treino C: Inferiores</h2>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Agachamento Livre</h3><p>4 séries x 10 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Leg Press 45°</h3><p>3 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Cadeira Extensora</h3><p>4 séries x 15 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+    </div>
+
+    <div id="ombros" class="workout-section">
+        <h2>Treino D: Deltoides</h2>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Desenvolvimento Militar</h3><p>4 séries x 10 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Elevação Lateral</h3><p>4 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+    </div>
+
+    <div id="bracos" class="workout-section">
+        <h2>Treino E: Bíceps e Tríceps</h2>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Rosca Direta</h3><p>3 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+        <div class="exercise-card">
+            <div class="ex-info"><h3>Tríceps Testa</h3><p>3 séries x 12 reps</p></div>
+            <div class="check-circle" onclick="toggleDone(this)">✓</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Progresso: <span id="progress-text">0</span> exercícios feitos hoje
+</footer>
+
+<script>
+    let doneCount = 0;
+
+    function showWorkout(id, btn) {
+        // Esconder todas as seções
+        document.querySelectorAll('.workout-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Mostrar a selecionada
+        document.getElementById(id).classList.add('active');
+
+        // Atualizar botões do menu
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function toggleDone(el) {
+        el.classList.toggle('done');
+        if(el.classList.contains('done')) {
+            doneCount++;
+        } else {
+            doneCount--;
+        }
+        document.getElementById('progress-text').innerText = doneCount;
+    }
+</script>
+
+</body>
+</html>
